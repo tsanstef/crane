@@ -204,11 +204,15 @@ class equipment_work_order_task(osv.osv):
     def print_inspection(self, cr, uid, ids, context=None):
         assert len(ids) == 1, 'This option should only be used for a single id at a time'        
         datas = {
-                 'model': 'equipment.work.order.task',
-                 'ids': ids,
-                 'form': self.read(cr, uid, ids[0], context=context),
+            'model': 'equipment.work.order.task',
+            'ids': ids,
+            'form': self.read(cr, uid, ids[0], context=context),
         }
-        return {'type': 'ir.actions.report.xml', 'report_name': 'customer.inspections', 'datas': datas, 'nodestroy': True}
+        return {
+            'type': 'ir.actions.report.xml', 
+            'report_name': 'crane_hoist_inspection_system.report_woinspection', 
+            'datas': datas, 'nodestroy': True
+        }
     
     
     # Fetching specification lines and equipment type values
