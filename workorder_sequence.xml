@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Sequences for Work Order -->
+        <record id="seq_type_equipment_work_order" model="ir.sequence.type">
+            <field name="name">Equipment Work Order</field>
+            <field name="code">equipment.work.order</field>
+        </record>
+
+        <record id="seq_equipment_work_order" model="ir.sequence">
+            <field name="name">Equipment Work Order</field>
+            <field name="code">equipment.work.order</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+		
+		 <!-- Sequences for Work Order Task -->
+        <record id="seq_type_equipment_work_order_task" model="ir.sequence.type">
+            <field name="name">Equipment Work Order Task</field>
+            <field name="code">equipment.work.order.task</field>
+        </record>
+
+        <record id="seq_equipment_work_order_task" model="ir.sequence">
+            <field name="name">Equipment Work Order Task</field>
+            <field name="code">equipment.work.order.task</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="wo_id" eval="True"/>
+        </record>
+		
+		 <!-- Sequences for Inspection result -->
+        <record id="seq_type_equipment_work_order_inspection" model="ir.sequence.type">
+            <field name="name">Inspection Result</field>
+            <field name="code">equipment.work.order.inspection</field>
+        </record>
+
+        <record id="seq_equipment_work_order_inspection" model="ir.sequence">
+            <field name="name">Inspection Result</field>
+            <field name="code">equipment.work.order.inspection</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="wo_id" eval="True"/>
+        </record>
+
+    </data>
+</openerp>

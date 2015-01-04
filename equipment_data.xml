@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!--
+    Resource: equipment.type
+    -->
+        <record id="equipment_type_sling" model="equipment.type">
+            <field name="name">Sling</field>
+        </record>
+        
+        <!--
+            Resource: equipment.type.specification
+        -->
+        <record id="equipment_type_specification_mfg" model="equipment.type.specification">
+            <field name="equipment_type_id" ref="equipment_type_sling"/>
+            <field name="name">Manufacturer</field>
+			<field name="orderno">1</field>            
+        </record>
+		
+		<record id="equipment_type_specification_type" model="equipment.type.specification">
+            <field name="equipment_type_id" ref="equipment_type_sling"/>
+            <field name="name">Type</field>
+			<field name="orderno">2</field>            
+        </record>
+		
+		<record id="equipment_type_specification_size" model="equipment.type.specification">
+            <field name="equipment_type_id" ref="equipment_type_sling"/>
+            <field name="name">Size</field>
+			<field name="orderno">3</field>            
+        </record>
+		
+		<record id="equipment_type_specification_length" model="equipment.type.specification">
+            <field name="equipment_type_id" ref="equipment_type_sling"/>
+            <field name="name">Length</field>
+			<field name="orderno">4</field>            
+        </record>
+		
+		<!--
+            Resource: equipment.type.inspection.point
+        -->
+        <record id="equipment_type_inspection_point_sling" model="equipment.type.inspection.point">
+            <field name="equipment_type_id" ref="equipment_type_sling"/>
+            <field name="name">Sling Inspection</field>            
+        </record>
+		
+		
+     </data>
+</openerp>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+
+    <record id="base.group_equipment_mgmt" model="res.groups">
+        <field name="name">Equipment Management</field>        
+    </record>
+    
+	<record id="base.group_workorder_mgmt" model="res.groups">
+        <field name="name">Equipment Workorder Management</field>        
+    </record>
+
+</data>
+</openerp>

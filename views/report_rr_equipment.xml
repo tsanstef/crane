@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_rr_equipment_document">
+  <t t-call="crane_hoist_inspection_system.crane_external_layout">
+    <div class="page">
+      <div class="oe_structure"/>
+      <h2 class="text-center" t-field="o.name"/> <!-- Report Title is Equipment Name -->
+      	
+      <div class="row mt8 mb8" id="informations">
+	      <div class="col-xs-1 text-left"> </div>    
+        <div class="col-xs-4 text-left">
+          <div class="row" id="basic_info">
+            <div class="col-xs-5 text-right"><strong>Equipment Type: </strong></div>
+            <div class="col-xs-7 text-left"><span t-field="o.equipment_type_id.name"/></div>
+          </div>
+          <div class="row" id="informations">
+            <div class="col-xs-5 text-right"><strong>Customer: </strong></div>
+            <div class="col-xs-7 text-left"><span t-field="o.partner_id.name"/></div>
+          </div>
+        </div>
+        
+        <div class="col-xs-1 text-right">
+          <strong>Location:</strong>
+	      </div>
+        <div class="col-xs-2 text-left">
+		      <div t-field="o.partner_id" 
+		          t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'
+		          style="border-bottom: 0px solid black; margin-top:0px;"/>
+	      </div>
+	      <div class="col-xs-3 text-right">
+	        <img t-if="o.photo" t-att-src="'data:image/png;base64,%s' % o.photo" style="max-height: 80px;"/>
+	      </div>
+        <div class="col-xs-1 text-left"> </div>
+      </div> <!-- row -->
+      
+      <table class="table table-condensed" style="margin-bottom: 0px;" id="parts_table">
+        <thead>
+          <tr>  
+            <th style="width: 50%;">Specification</th>
+            <th style="width: 50%;">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <t t-foreach="o.equip_specification_line" t-as="spec_line">
+            <tr>
+              <td><span t-field="spec_line.name"/></td>
+              <td><span t-field="spec_line.spec_value"/></td>
+            </tr>
+          </t>
+        </tbody>
+      </table>
+      <div style="border-bottom: 1px solid #e6e6e6;"></div>
+      
+      
+      <div class="row mt32 mb8" id="note">
+        <div class="col-xs-12">
+          <p><strong>Notes:</strong></p>
+          <p t-esc="o.notes"/>
+        </div>
+      </div>
+      
+    </div> <!-- page -->
+  </t>
+</template>
+
+
+<template id="report_rr_equipment">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'crane_hoist_inspection_system.report_rr_equipment_document')"/>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

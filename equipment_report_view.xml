@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--
+        <report auto="False" id="report_customer_equipments" model="equipment.customer" name="customer.equipments"
+                rml="crane_hoist_inspection_system/report/equipments.rml" string="Equipment Report"
+                usage="default" groups="base.group_equipment_mgmt"/>
+				
+	 <report auto="False" id="report_customer_workorders" model="equipment.work.order" name="customer.workorders"
+        rml="crane_hoist_inspection_system/report/workorder.rml" string="Workorder Report"
+        usage="default" groups="base.group_workorder_mgmt"/>
+	
+	<report auto="False" id="report_customer_workorders_inspection" model="equipment.work.order" name="customer.workorders.inspection"
+        rml="crane_hoist_inspection_system/report/workorder_inspection.rml" string="Workorder Report (Inspection)"
+        usage="default" groups="base.group_workorder_mgmt"/>
+	
+	<report auto="False" id="report_customer_sling_workorders" model="equipment.work.order" name="customer.sling.workorders"
+        rml="crane_hoist_inspection_system/report/sling.rml" string="Sling Inspection Report"
+        usage="default" groups="base.group_workorder_mgmt"/>
+	
+	<report auto="False" id="report_customer_inspections" model="equipment.work.order.task" name="customer.inspections"
+        rml="crane_hoist_inspection_system/report/inspection.rml" string="Inspection Report"
+        usage="default" groups="base.group_workorder_mgmt"/>
+-->
+	
+	<report id="report_customer_wo_inspection" 
+		model="equipment.work.order.task" 
+	        string="Inspection Report"
+		report_type="qweb-pdf"
+	        file="crane_hoist_inspection_system.report_woinspection"
+		name="crane_hoist_inspection_system.report_woinspection" 
+		groups="base.group_workorder_mgmt"/>
+
+	<report
+		id="report_customer_wo_workorders" 
+		model="equipment.work.order"
+		string="Workorder Report"
+		report_type="qweb-pdf"
+		file="crane_hoist_inspection_system.report_workorder"
+		name="crane_hoist_inspection_system.report_workorder"
+        	groups="base.group_workorder_mgmt"/>
+        	
+  <report
+		id="report_customer_wo_workorders_inspection" 
+		model="equipment.work.order"
+		string="Workorder Report (Inspection)"
+		report_type="qweb-pdf"
+		file="crane_hoist_inspection_system.report_workorder_inspection"
+		name="crane_hoist_inspection_system.report_workorder_inspection"
+    groups="base.group_workorder_mgmt"/>
+
+  <report
+		id="report_customer_wo_sling_workorders" 
+		model="equipment.work.order"
+		string="Sling Inspection Report"
+		report_type="qweb-pdf"
+		file="crane_hoist_inspection_system.report_workorder_sling"
+		name="crane_hoist_inspection_system.report_workorder_sling"
+        	groups="base.group_workorder_mgmt"/>
+  <report
+		id="report_wo_customer_equipment" 
+		model="equipment.customer"
+		string="Equipment Report"
+		report_type="qweb-pdf"
+		file="crane_hoist_inspection_system.report_rr_equipment"
+		name="crane_hoist_inspection_system.report_rr_equipment"
+    groups="base.group_equipment_mgmt"/>				
+		
+
+    </data>
+</openerp>

@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+		
+		<!-- Top menu item -->
+        <menuitem name="Maintenance"
+            id="base.menu_maintenance_root"
+            sequence="70"/>
+			
+		<menuitem id="menu_equipement_management" name="Equipments"
+            parent="base.menu_maintenance_root" sequence="1" />
+		
+		<menuitem action="hr.open_view_employee_list_my" id="menu_inherit_open_view_employee_list"
+            parent="menu_equipement_management"
+            sequence="3"/>
+			
+		<menuitem action="base.action_partner_form" id="menu_inherit_action_partner_form"
+            parent="menu_equipement_management"
+            sequence="6"/>
+			
+		<!-- Equipment Types -->
+		<record id="view_equipment_type_tree" model="ir.ui.view">
+            <field name="name">equipment.type.tree</field>
+            <field name="model">equipment.type</field>
+            <field name="arch" type="xml">
+                <tree string="Equipment Types">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+		
+			
+		<!-- Equipment Types -->
+        <record id="view_equipment_type_tree" model="ir.ui.view">
+            <field name="name">equipment.type.tree</field>
+            <field name="model">equipment.type</field>
+            <field name="arch" type="xml">
+                <tree string="Equipment Types">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+		
+        <record id="view_equipment_type_form" model="ir.ui.view">
+            <field name="name">equipment.type.form</field>
+            <field name="model">equipment.type</field>
+            <field name="arch" type="xml">
+                <form string="Equipment Types" version="7.0">
+					<sheet>
+                    	<group>
+							<group>
+								<field name="name"/>
+							</group>
+						</group>
+						<group string="Specification List">
+							<field name="specification_line" nolabel="1">
+                                <tree string="Specification List" editable="bottom" nolabel="1">                                    
+                                    <field name="orderno" widget="handle"/>
+									<field name="name"/>                                    
+                                </tree>
+                            </field>
+						</group>
+						<group string="Inspection Points">
+							<field name="inspection_line" nolabel="1">
+                                <tree string="Inspection Points" editable="bottom" nolabel="1" limit="2">                                    
+                                    <field name="orderno" widget="handle"/>
+									<field name="name"/>
+									<field name="point_header"/>
+                                </tree>
+                            </field>
+						</group>
+					</sheet>
+                </form>
+            </field>
+        </record>
+		
+		<record id="view_equipment_type_filter" model="ir.ui.view">
+            <field name="name">equipment.type.select</field>
+            <field name="model">equipment.type</field>
+            <field name="arch" type="xml">
+                <search string="Search Equipment Type">
+                   <field name="name"
+                       filter_domain="['|','|',('name','ilike',self)]"/>                   
+               </search>
+            </field>
+        </record>
+		
+		<record id="equipment_type_rfq" model="ir.actions.act_window">
+            <field name="name">Equipment Types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">equipment.type</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">tree,form</field> 
+			<field name="search_view_id" ref="view_equipment_type_filter"/>           
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Equipment Type.
+              </p>
+            </field>
+        </record>
+		
+		<menuitem action="equipment_type_rfq" id="menu_equipment_type_rfq"
+            parent="menu_equipement_management"
+            sequence="9" groups="base.group_equipment_mgmt"/>
+			
+		<!-- Equipments -->
+        <record id="view_equipment_customer_tree" model="ir.ui.view">
+            <field name="name">equipment.customer.tree</field>
+            <field name="model">equipment.customer</field>
+            <field name="arch" type="xml">
+                <tree string="Equipments">
+                    <field name="name"/>
+					<field name="partner_id"/>
+					<field name="equipment_type_id"/>					
+                </tree>
+            </field>
+        </record>
+		
+        <record id="view_equipment_customer_form" model="ir.ui.view">
+            <field name="name">equipment.customer.form</field>
+            <field name="model">equipment.customer</field>
+            <field name="arch" type="xml">
+                <form string="Equipments" version="7.0">
+					<sheet>
+						<field name="photo"  nolabel="1" class="oe_left oe_avatar" img_width="120" img_height="120" width="120" height="120" widget="image"/>					
+						<h1>
+							<label string="Certification Number "/>
+                            <field name="name" class="oe_inline" default_focus="1" placeholder="Enter Name"/>
+                        </h1>
+                    	<group>
+							<group>
+								<field name="equipment_type_id" on_change="onchange_equipment_type_id(equipment_type_id)"/>								
+							</group>
+							<group>
+								<field name="partner_id" context="{'show_address': 1}" options='{"always_reload": True}'/>							
+								
+							</group>
+						</group>
+						<group string="Specification List">
+							<field name="equip_specification_line" nolabel="1">
+                                <tree string="Specification List" editable="bottom" nolabel="1">                                    
+                                    <field name="orderno" widget="handle"/>
+									<field name="name" readonly="1"/>
+									<field name="spec_value"/>                                    
+                                </tree>
+                            </field>
+						</group>
+						<group string="Notes">
+							<field name="notes" nolabel="1" placeholder="Enter Notes..."/>
+						</group>
+					</sheet>
+                </form>
+            </field>
+        </record>
+		
+		<record model="ir.ui.view" id="view_equipment_customer_kanban">
+        <field name="name">Equipments</field>
+        <field name="model">equipment.customer</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_employee_vignette">
+                            <div class="oe_employee_image">
+                                <a type="open"><img t-att-src="kanban_image('equipment.customer', 'photo', record.id.value)" class="oe_employee_picture"/></a>
+                            </div>
+                            <div class="oe_employee_details">
+                                <h4>
+                                    <a type="open"><field name="name"/></a>
+                                </h4>
+                                <ul>
+                                    <li t-if="record.equipment_type_id.raw_value">Equipment Type: <field name="equipment_type_id"/></li>
+                                    <li t-if="record.partner_id.raw_value">Customer: <field name="partner_id"/></li>                                    
+                                </ul>
+                            </div>
+                        </div>                        
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+		
+		<record id="view_equipment_customer_filter" model="ir.ui.view">
+            <field name="name">equipment.customer.select</field>
+            <field name="model">equipment.customer</field>
+            <field name="arch" type="xml">
+                <search string="Search Equipments">
+                   <field name="name"
+                       filter_domain="['|','|',('name','ilike',self)]"/>
+				   <field name="equipment_type_id"/>
+				   <field name="partner_id"/>				   
+                   <group expand="0" string="Group By...">                       
+                       <filter string="Equipment Types" context="{'group_by': 'equipment_type_id'}"/>
+                       <filter string="Customers" context="{'group_by': 'partner_id'}"/>
+                   </group>	                   
+               </search>
+            </field>
+        </record>
+		
+		<record id="equipment_customer_rfq" model="ir.actions.act_window">
+            <field name="name">Customer Equipments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">equipment.customer</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">kanban,tree,form</field> 
+			<field name="search_view_id" ref="view_equipment_customer_filter"/>           
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Equipments and associate it with Customers.
+              </p>
+            </field>
+        </record>
+		
+		<menuitem action="equipment_customer_rfq" id="menu_equipment_customer_rfq"
+            parent="menu_equipement_management"
+            sequence="12" groups="base.group_equipment_mgmt"/>
+
+	</data>
+</openerp>

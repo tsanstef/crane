@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+	
+		<record model="ir.ui.view" id="res_partner_view_workorder_buttons">
+            <field name="name">res.partner.view.workorder.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button type="action"
+                        string="Work Orders"
+                        name="%(crane_hoist_inspection_system.equipment_work_order_rfq)d"
+                        context="{'search_default_partner_id': active_id, 'default_partner_id' : [active_id]}"/>
+					<button type="action"
+                        string="Inspections"
+                        name="%(crane_hoist_inspection_system.equipment_work_order_task_rfq)d"
+                        context="{'search_default_partner_id': active_id, 'default_partner_id' : [active_id]}"/>                    
+					                    
+                </xpath>
+            </field>
+        </record>
+
+			
+	</data>
+</openerp>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_workorder_document">
+  <t t-call="crane_hoist_inspection_system.crane_external_layout">
+    <div class="page">
+      <div class="oe_structure"/>
+      <h2 class="text-center">Work Order</h2>	
+      <div class="row mt8 mb8" id="informations">
+	<div class="col-xs-1 text-left"> </div>
+	<div class="col-xs-1">
+                    <strong>Company: </strong>
+	</div>
+        <div class="col-xs-2 text-left">
+		<!--span t-field="o.partner_id"/>:<span t-field="o.partner_id.name"/><br/-->
+		<div t-field="o.partner_id" 
+		    t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+		    style="border-bottom: 0px solid black; margin-top:0px;"/>
+	</div>
+	<div class="col-xs-5 text-right">
+		<strong>Work Order: </strong><br/>
+		<strong>Purchase Order: </strong><br/>
+		<strong>Date: </strong><br/>
+		<strong>Status: </strong><br/>
+	</div>
+	<div class="col-xs-2 text-left">
+		<span t-field="o.name"></span><br/>
+		<span t-field="o.purchase_order"></span><br/>
+		<span t-field="o.date"></span><br/>
+		<span t-field="o.state"></span><br/>
+	</div>
+	<div class="col-xs-1 text-left"> </div>
+
+	<!-- div t-if="o.equipment_customer_id.partner_id.title.name" class="col-xs-4">
+                    <strong>Company: </strong><span t-field="o.equipment_customer_id.partner_id.title.name"/>
+	</div>
+	<div t-if="o.equipment_customer_id.partner_id.name" class="col-xs-4">
+                    <strong>Company: </strong><span t-field="o.equipment_customer_id.partner_id.name"/>
+                    
+	</div>
+	<div t-if="o.wo_id.name" class="col-xs-4">
+                    <strong>Work Order: </strong><span t-field="o.wo_id.name"/><br/>
+		    <strong>Certificate: </strong><span t-field="o.equipment_customer_id.name"/>
+	</div>
+	<div t-if="o.date" class="col-xs-4">
+                    <strong>Completion Date: </strong><span t-field="o.date"/>
+	</div> <!  row -->        
+      </div> 
+      <div class="row mt16 mb8" id="description_row">
+	<div class="col-xs-12 text-left">
+                <p><strong>DESCRIPTION: </strong></p>
+		<p t-esc="o.desc"/>
+	</div>
+      </div>
+      <div class="row  mt8 mb8" id="wo_lines">
+        <div class="col-xs-1"><strong>Work</strong></div>
+        <div class="col-xs-2"><strong>Equipment</strong></div>
+        <div class="col-xs-2"><strong>Certificate</strong></div>
+        <div class="col-xs-5"><strong>Description</strong></div>
+        <div class="col-xs-2"><strong>Status</strong></div>
+      </div>
+      <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+      </div> <!-- line -->
+      <t t-foreach="o.wo_task_lines" t-as="wo_line">                   
+         <div class="row mt4 mb4" id="wo_line">
+            <div class="col-xs-1"><span t-field="wo_line.task_type"/></div>
+            <div class="col-xs-2"><span t-field="wo_line.equipment_type.name"/></div>
+            <div class="col-xs-2"><span t-field="wo_line.equipment_customer_id.name"/></div>
+            <div class="col-xs-5"><span t-field="wo_line.desc"/></div>
+            <div class="col-xs-2"><span t-field="wo_line.state"/></div>
+        </div>
+	      <div class="row">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid #e6e6e6;"></div>
+            </div>
+        </div> <!-- row -->
+      </t>
+      <div class="row mt8 mb8">
+        <div class="col-xs-12" style="padding-right: 30px; padding-left: 30px;">
+	        <table class="table table-condensed" style="margin-bottom: 0px;" id="parts_table">
+			        <thead>
+			          <tr>
+				          <th style="width: 155px;">Quantity</th>
+				          <th style="width: 155px;">Part Number</th>
+				          <th>Description</th>
+				        </tr>
+		        </thead>
+		        <tbody>
+              <t t-foreach="o.wo_task_lines" t-as="wo_line">
+                <t t-foreach="wo_line.service_spec_parts" t-as="wo_part">
+                  <tr> 
+                    <td><span t-field="wo_part.part_qty"/></td>
+                    <td><span t-field="wo_part.name"/></td>
+                    <td><span t-field="wo_part.part_desc"/></td>
+                  </tr>
+                </t> 
+              </t>
+            </tbody>
+	        </table>
+	        <div style="border-bottom: 1px solid #e6e6e6;"></div>
+	        <table class="table table-condensed" style="margin-bottom: 0px;" id="labor_table">
+			        <thead>
+			          <tr>
+				          <th style="width: 155px;">Start Time</th>
+				          <th style="width: 155px;">Finish Time</th>
+				          <th style="width: 155px;">Hours</th>
+				          <th>Rate Type</th>
+				        </tr>
+		        </thead>		        
+		        <tbody>
+              <t t-foreach="o.wo_task_lines" t-as="wo_line">
+                <t t-foreach="wo_line.labor_line" t-as="wo_labor">
+                  <tr> 
+                    <td><span t-field="wo_labor.start_time"/></td>
+                    <td><span t-field="wo_labor.end_time"/></td>
+                    <td><span t-field="wo_labor.duration"/></td>
+                    <td>
+                      <span t-if="wo_labor.labor_type == 'regular'">Regular</span>
+                      <span t-if="wo_labor.labor_type == 'overtime'">Overtime</span>
+                      <span t-if="wo_labor.labor_type == 'double'">Double</span>
+                    </td>
+                  </tr>
+                </t> 
+              </t>
+            </tbody>
+	        </table>
+	        <div style="border-bottom: 1px solid #e6e6e6;"></div>	
+        </div>
+      </div>
+      <div class="row mt16 mb16" id="declaimer">
+        <t t-set="company" t-value="res_company"></t>
+        <div class="col-xs-12">We have worked on the above overhead equipment and verify we have not left any loose material on
+that equipment.</div>
+      </div>
+      
+      <div class="row mt16 mb16" id="declaimer">
+        <div class="col-xs-6">
+          <p><strong>Customer Signature:</strong></p>
+        </div>
+        <div class="col-xs-6">
+          <p><strong>Customer Name:</strong></p>
+        </div>
+      </div>
+      <div class="row mt16 mb16" id="declaimer">
+        <div class="col-xs-6">
+          <p><strong>Technician Signature:</strong></p>
+        </div>
+        <div class="col-xs-6">
+          <p><strong>Technician Name:</strong></p>
+        </div>
+      </div>
+      
+    </div> <!-- page -->
+  </t>
+</template>
+<template id="report_workorder">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'crane_hoist_inspection_system.report_workorder_document')"/>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

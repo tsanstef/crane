@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_woinspection_document">
+  <t t-call="crane_hoist_inspection_system.crane_external_layout">
+    <div class="page">
+      <div class="oe_structure"/>
+      <h2 class="text-center"><span t-field="o.equipment_type.name"/><span> InspectionCertificate</span></h2>	
+      <div class="row mt8 mb8" id="informations">
+	<div t-if="o.equipment_customer_id.partner_id.title.name" class="col-xs-4">
+                    <strong>Company: </strong><span t-field="o.equipment_customer_id.partner_id.title.name"/>
+                    <!-- p t-field="o.equipment_customer_id.partner_id.title.name"/ -->
+	</div>
+	<div t-if="o.equipment_customer_id.partner_id.name" class="col-xs-4">
+                    <strong>Company: </strong><span t-field="o.equipment_customer_id.partner_id.name"/>
+                    <!-- p t-field="o.equipment_customer_id.partner_id.name"/ -->
+	</div>
+	<div t-if="o.wo_id.name" class="col-xs-4">
+                    <strong>Work Order: </strong><span t-field="o.wo_id.name"/><br/>
+		    <strong>Certificate: </strong><span t-field="o.equipment_customer_id.name"/>
+	</div>
+	<div t-if="o.date" class="col-xs-4">
+                    <strong>Completion Date: </strong><span t-field="o.date"/>
+	</div>        
+      </div> <!-- row -->
+      <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+       </div> <!-- line -->
+      <!--  specification -->
+      <div class="row   mt8 mb8" id="specification title">
+          <div class="col-xs-12"><strong>Specification</strong></div>
+      </div> <!-- row -->
+      <div class="row" id="specifications">
+            <div class="col-xs-6">
+                <!-- t t-attr-SPECCOUNT="0"/ -->
+                <t t-foreach="o.spec_line" t-as="line">                   
+                    <span t-field="line.name"/>:  <span t-field="line.spec_value"/><br/>
+                </t>
+                <!--span t-raw="SPECCOUNT"/-->
+
+            </div>
+           <!--div class="col-xs-6" t-if="(SPECCOUNT>2)">
+                <t t-foreach="o.spec_line" t-as="line">
+                    <span t-field="line.name"/>:  </strong><span t-field="line.spec_value"/><br/>
+                </t>
+            </div-->
+      </div> <!-- row -->
+      <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+       </div> <!-- line delimiter -->
+      <div class="row  mt8 mb8" id="inspection_points_titles">
+          <div class="col-xs-3"><strong>Inspection Point</strong></div>
+          <div class="col-xs-2"><strong>Result</strong></div>
+          <div class="col-xs-7"><strong>Comment</strong></div>
+      </div> <!-- row -->
+      <t t-foreach="o.insp_spec_points" t-as="line2">                   
+         <div class="row" id="inspection_point">
+              <div class="col-xs-3"><span t-field="line2.name"/></div>
+              <div class="col-xs-2"><span t-field="line2.point_status.name"/></div>
+              <div class="col-xs-7"><span t-field="line2.point_comment"/></div>
+          </div> <!-- row -->
+      </t> <!-- for each -->
+      <div class="row mt16 mb16" id="notes">
+            <div class="col-xs-12"><strong>Notes: </strong><span t-field="o.notes"/></div>
+       </div> <!-- row -->
+       <div class="row mt8 mb8" id="result">
+            <div class="col-xs-12"><strong>Inspection Result: <span t-field="o.inspection_result"></span></strong></div>
+       </div> <!-- row -->
+       <div class="row mt32 mb32" id="signature">
+            <div class="col-xs-9">Technician's Signature:</div>
+            <div class="col-xs-3">Date:</div>
+       </div> <!-- row -->
+       <div class="row mt8 mb8" id="declaimer">
+          <t t-set="company" t-value="res_company"></t>
+          <div class="col-xs-12">This inspection is valid for work specifically requested. All certificates are result of work performed in conformance with applicable specifications and standards to the best of our ability and intent. However <span t-field="company.name"/> will not be responsible for deviation within the normal limits of accuracy in accordance with practices.
+          </div>
+       </div> <!-- row -->
+    </div> <!-- page -->
+  </t>
+</template>
+<template id="report_woinspection">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'crane_hoist_inspection_system.report_woinspection_document')"/>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

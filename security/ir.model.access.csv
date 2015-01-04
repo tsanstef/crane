@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_equipment_type,equipment.type,model_equipment_type,base.group_equipment_mgmt,1,1,1,1
+access_equipment_type_specification,equipment.type.specification,model_equipment_type_specification,base.group_equipment_mgmt,1,1,1,1
+access_equipment_type_inspection_point,equipment.type.inspection.point,model_equipment_type_inspection_point,base.group_equipment_mgmt,1,1,1,1
+access_equipment_customer,equipment.customer,model_equipment_customer,base.group_equipment_mgmt,1,1,1,1
+access_equipment_customer_specification,equipment.customer.specification,model_equipment_customer_specification,base.group_equipment_mgmt,1,1,1,1
+access_equipment_work_order,equipment.work.order,model_equipment_work_order,base.group_workorder_mgmt,1,1,1,1
+access_equipment_work_order_task,equipment.work.order.task,model_equipment_work_order_task,base.group_workorder_mgmt,1,1,1,1
+access_spec_task,spec.task,model_spec_task,base.group_workorder_mgmt,1,1,1,1
+access_labor_task,labor.task,model_labor_task,base.group_workorder_mgmt,1,1,1,1
+access_spec_inspection_points,spec.inspection.points,model_spec_inspection_points,base.group_workorder_mgmt,1,1,1,1
+access_inspection_result_type,inspection.result.type,model_inspection_result_type,base.group_workorder_mgmt,1,1,1,1
+access_spec_service_parts,spec.service.parts,model_spec_service_parts,base.group_workorder_mgmt,1,1,1,1
+access_wo_task_inspection_photo,wo.task.inspection.photo,model_wo_task_inspection_photo,base.group_workorder_mgmt,1,1,1,1

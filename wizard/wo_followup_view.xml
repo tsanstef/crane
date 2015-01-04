@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_work_order_followup" model="ir.ui.view">
+            <field name="name">equipment.work.order.followup.form</field>
+            <field name="model">equipment.work.order.followup</field>
+            <field name="arch" type="xml">
+                <form string="Create Work Order Followup" version="7.0">
+                    <group col="4">
+						<field name="name"/>
+					</group>
+                    <footer>
+                        <button confirm="Are you sure you want to create a followup based on this work order ?" name="create_followup" string="Create Followup" type="object" groups="base.group_workorder_mgmt" class="oe_highlight"/>
+                        <label string="or" groups="base.group_workorder_mgmt"/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Create a Follow up Work Order"
+            res_model="equipment.work.order.followup"
+            src_model="equipment.work.order"
+            target="new"
+            view_mode="form"
+            view_type="form"
+            id="action_view_work_order_followup"/>
+
+    </data>
+</openerp>

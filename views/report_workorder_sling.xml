@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_workorder_sling_document">
+  <t t-call="crane_hoist_inspection_system.crane_external_layout">
+    <div class="page">
+      <div class="oe_structure"/>
+      <h2 class="text-center">Sling Inspection Report</h2>	
+      <div class="row mt8 mb8" id="informations">
+	<div class="col-xs-1 text-left"> </div>
+	<div class="col-xs-1">
+    <strong>Company: </strong>
+	</div>
+        <div class="col-xs-2 text-left">
+		<!--span t-field="o.partner_id"/>:<span t-field="o.partner_id.name"/><br/-->
+		<div t-field="o.partner_id" 
+		    t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+		    style="border-bottom: 0px solid black; margin-top:0px;"/>
+	</div>
+	<div class="col-xs-5 text-right">
+		<strong>Work Order: </strong><br/>
+		<strong>Purchase Order: </strong><br/>
+		<strong>Date: </strong><br/>
+		<strong>Status: </strong><br/>
+	</div>
+	<div class="col-xs-2 text-left">
+		<span t-field="o.name"></span><br/>
+		<span t-field="o.purchase_order"></span><br/>
+		<span t-field="o.date"></span><br/>
+		<span t-field="o.state"></span><br/>
+	</div>
+	<div class="col-xs-1 text-left"> </div>
+  </div> 
+  <div class="row mt16 mb8" id="description_row">
+	  <div class="col-xs-12 text-left">
+    <p><strong>DESCRIPTION: </strong></p>
+		<p t-esc="o.desc"/>
+	</div>
+  </div>
+      
+      <table class="table table-condensed" style="margin-bottom: 0px;" id="parts_table">
+        <thead>
+          <tr>  
+            <th style="width: 100px;">Certificate</th>
+            <t t-foreach="o.wo_task_lines" t-as="wo_line">
+              <t t-if="wo_line.equipment_type.name == 'Sling' and spec_titles != 'true'">
+                <t t-foreach="wo_line.spec_line" t-as="line_spec">
+                  <t t-if="line_spec_index == 0">
+                    <th style="width: 115px;"><t t-esc="line_spec.name"/></th>
+                  </t>
+                  <t t-if="line_spec_index == 1">
+                    <th style="width: 90px;"><t t-esc="line_spec.name"/></th>
+                  </t>
+                  <t t-if="line_spec_index > 1">
+                    <th style="width: 70px;"><t t-esc="line_spec.name"/></th>
+                  </t>
+                </t>
+                <t t-set="spec_titles">true</t>
+              </t>
+            </t>
+            <th style="width: 85px;">Result</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <t t-foreach="o.wo_task_lines" t-as="wo_line">
+            <t t-if="wo_line.task_type == 'inspection' and wo_line.equipment_type.name == 'Sling'">
+              <tr>
+                <td><span t-field="wo_line.equipment_customer_id"/></td>
+                <t t-foreach="wo_line.spec_line" t-as="line_spec">
+                  <td><span t-field="line_spec.spec_value"/></td>
+                </t>
+                <td><span t-field="wo_line.inspection_result"/></td>
+                <td><span t-field="wo_line.notes"/></td>
+              </tr>  
+            </t>
+          </t>
+        </tbody>
+      </table>
+      <div style="border-bottom: 1px solid #e6e6e6;"></div>
+      
+      
+      <div class="row mt32 mb16" id="declaimer">
+        <div class="col-xs-6">
+          <p><strong>Technician Name:</strong></p>
+        </div>
+        <div class="col-xs-6">
+          <p><strong>Date:</strong><span t-field="o.date"/></p>
+        </div>
+      </div>
+      <div class="row mt16 mb16" id="declaimer">
+        <div class="col-xs-6">
+          <p><strong>Technician Signature:</strong></p>
+        </div>
+        <div class="col-xs-6">
+          <!--p><strong>Technician Name:</strong></p-->
+        </div>
+      </div>
+      
+    </div> <!-- page -->
+  </t>
+</template>
+<template id="report_workorder_sling">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'crane_hoist_inspection_system.report_workorder_sling_document')"/>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_inspection_point_photo" model="ir.ui.view">
+            <field name="name">Inspection Point Photo</field>
+            <field name="model">wo.task.inspection.photo</field>
+            <field name="arch" type="xml">
+                <form string="Inspection Point Photo" version="7.0">
+					<group>
+						<div class="proven_readonly_photo">
+							<field name="photo" widget="image" colspan="4" nolabel="1"/>
+						</div>
+					</group>					
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Inspection Point Photo"
+            res_model="wo.task.inspection.photo"
+            src_model="spec.inspection.points"
+            target="new"
+            view_mode="form"
+            view_type="form"
+            id="action_view_inspection_point_photo"/>
+
+    </data>
+</openerp>
