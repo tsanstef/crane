@@ -79,8 +79,7 @@
             <field name="model">equipment.type</field>
             <field name="arch" type="xml">
                 <search string="Search Equipment Type">
-                   <field name="name"
-                       filter_domain="['|','|',('name','ilike',self)]"/>                   
+                   <field name="name"/>                   
                </search>
             </field>
         </record>
@@ -187,8 +186,7 @@
             <field name="model">equipment.customer</field>
             <field name="arch" type="xml">
                 <search string="Search Equipments">
-                   <field name="name"
-                       filter_domain="['|','|',('name','ilike',self)]"/>
+                   <field name="name"/>
 				   <field name="equipment_type_id"/>
 				   <field name="partner_id"/>				   
                    <group expand="0" string="Group By...">                       
