@@ -193,8 +193,7 @@
             <field name="model">equipment.work.order</field>
             <field name="arch" type="xml">
                 <search string="Search Work Orders">
-                   <field name="name"
-                       filter_domain="['|','|',('name','ilike',self)]"/>				   
+                   <field name="name"/>				   
 				   <field name="partner_id"/>
 				   <field name="purchase_order"/>
 				   <field name="accepted_by"/>				   
