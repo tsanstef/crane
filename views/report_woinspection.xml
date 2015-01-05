@@ -47,23 +47,62 @@
                 </t>
             </div-->
       </div> <!-- row -->
-      <div class="row zero_min_height">
+      <div class="row mt8 mb8">
             <div class="col-xs-12">
-                <div style="border-bottom: 1px solid black;"></div>
+                <div style="border-bottom: 0px solid black;"></div>
             </div>
        </div> <!-- line delimiter -->
+       
+       
+        <table class="table table-condensed" id="inspection_points_titles">
+         <thead>
+             <tr>
+                 <th style="width: 25%;">Inspection Point</th>
+                 <th style="width: 15%;">Result</th>
+                 <th style="width: 60%;">Comment</th>
+             </tr>
+         </thead>
+         <tbody class="sale_tbody">
+            <tr t-foreach="o.insp_spec_points" t-as="line2">
+                <t t-if="line2.point_header == True">
+                    <td colspan="3">
+                        <strong>    
+                            <span t-field="line2.name"/>
+                        </strong>
+                     </td>
+                </t>
+                <t t-if="line2.point_header == False">  
+                     <td>
+                        <span t-field="line2.name"/>
+                     </td>
+                     <td>
+                         <span t-field="line2.point_status.name"/>
+                     </td>
+                     <td>
+                         <span t-field="line2.point_comment"/>
+                     </td>
+                 </t>
+             </tr>        
+         </tbody>
+        </table> 
+       
+       
+       
+       <!-- 
+       
       <div class="row  mt8 mb8" id="inspection_points_titles">
           <div class="col-xs-3"><strong>Inspection Point</strong></div>
           <div class="col-xs-2"><strong>Result</strong></div>
           <div class="col-xs-7"><strong>Comment</strong></div>
-      </div> <!-- row -->
+      </div> 
       <t t-foreach="o.insp_spec_points" t-as="line2">                   
          <div class="row" id="inspection_point">
               <div class="col-xs-3"><span t-field="line2.name"/></div>
               <div class="col-xs-2"><span t-field="line2.point_status.name"/></div>
               <div class="col-xs-7"><span t-field="line2.point_comment"/></div>
-          </div> <!-- row -->
-      </t> <!-- for each -->
+          </div>
+      </t> 
+      -->
       <div class="row mt16 mb16" id="notes">
             <div class="col-xs-12"><strong>Notes: </strong><span t-field="o.notes"/></div>
        </div> <!-- row -->
