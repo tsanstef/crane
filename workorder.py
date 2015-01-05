@@ -84,7 +84,7 @@ class equipment_work_order_task(osv.osv):
         stat = self.read(cr, uid, ids, ['state'], context=context)
         unlink_ids = []
         for t in stat:
-            if t['state'] in ('draft'):
+            if t['state'] in ('draft', 'inprocess'):
                 unlink_ids.append(t['id'])
             else:
                 raise osv.except_osv(_('Invalid Action!'), _('You can not delete a task which is in "In Process" or "Done" state'))
