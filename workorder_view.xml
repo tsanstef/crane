@@ -100,10 +100,10 @@
                                                         <field name="insp_spec_points" nolabel="1">
                                                             <tree string="Inspection Points" editable="bottom" nolabel="1">
                                                                 <field name="name" readonly="1"/>
-                                                                <field name="point_header" attrs="{'readonly': [('state','=','task_draft')]}" invisible="1"/>
-                                                                <field name="point_status" widget="selection" attrs="{'readonly': ['|', ('state','=','task_draft'), ('point_header', '=', True)]}"/>
-                                                                <field name="point_comment" attrs="{'readonly': ['|', ('state','=','task_draft'), ('point_header', '=', True)]}"/>
-                                                                <field name="image_medium" widget="image" class="proven_photo" attrs="{'readonly': ['|', ('state','=','task_draft'), ('point_header', '=', True)]}"/>
+                                                                <field name="point_header" invisible="1"/>
+                                                                <field name="point_status" widget="selection" attrs="{'readonly': [('point_header', '=', True)]}"/>
+                                                                <field name="point_comment" attrs="{'readonly': [('point_header', '=', True)]}"/>
+                                                                <field name="image_medium" widget="image" class="proven_photo" attrs="{'readonly': [('point_header', '=', True)]}"/>
                                                                 <button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>                                                        
                                                                 <field name="state" invisible="1"/>                                                                            
                                                             </tree>
