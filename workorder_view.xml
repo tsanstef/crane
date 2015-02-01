@@ -8,12 +8,13 @@
 		<menuitem id="menu_equipement_workorder_conf" name="Configuration"
             parent="base.menu_maintenance_root" sequence="3" />
 		
+		 			
 		<!-- Work Orders -->
         <record id="view_equipment_work_order_tree" model="ir.ui.view">
             <field name="name">equipment.work.order.tree</field>
             <field name="model">equipment.work.order</field>
             <field name="arch" type="xml">
-                <tree string="Work Order">
+                <tree string="Inspection Points">
                     <field name="name"/>
 					<field name="partner_id"/>
 					<field name="purchase_order"/>
@@ -24,7 +25,8 @@
 					<field name="state"/>
                 </tree>				
             </field>
-        </record>
+        </record>	
+		
 		
         <record id="view_equipment_work_order_form" model="ir.ui.view">
             <field name="name">equipment.work.order.form</field>
@@ -96,15 +98,16 @@
 										<notebook>
 											<page string="Inspection Points" attrs="{'invisible': [('task_type','=','service')]}">
                                                 <group>
-                                                    <div class="proven_list_header proven_list_image">
+                                                    <div class="proven_list_header">
                                                         <field name="insp_spec_points" nolabel="1">
                                                             <tree string="Inspection Points" editable="bottom" nolabel="1">
                                                                 <field name="name" readonly="1"/>
                                                                 <field name="point_header" invisible="1"/>
                                                                 <field name="point_status" widget="selection" attrs="{'readonly': [('point_header', '=', True)]}"/>
-                                                                <field name="point_comment" attrs="{'readonly': [('point_header', '=', True)]}"/>
-                                                                <field name="image_medium" widget="image" class="proven_photo" attrs="{'readonly': [('point_header', '=', True)]}"/>
-                                                                <button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>                                                        
+                                                                <field name="point_comment" attrs="{'readonly': [('point_header', '=', True)]}"/>                                                                
+																<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action"/>
+                                                                <!--<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>-->																
+																<field name="image_medium" widget="image" class="proven_photo" attrs="{'readonly': [('point_header', '=', True)]}" invisible="1"/>                                                        
                                                                 <field name="state" invisible="1"/>                                                                            
                                                             </tree>
 														</field>
@@ -293,9 +296,10 @@
 										<field name="name"/>
 										<field name="point_header" invisible="1"/>
 										<field name="point_status" widget="selection"/>
-										<field name="point_comment"/>
-										<field name="image_medium" widget="image" img_width='100' img_height='33' class="proven_photo"/>
-										<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>
+										<field name="point_comment"/>										
+										<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action"/>
+										<!--<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>
+										<field name="image_medium" widget="image" img_width='100' img_height='33' class="proven_photo" invisible="1"/>-->
 										<field name="state" invisible="1"/>										                                    
 									</tree>
 								</field>
