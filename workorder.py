@@ -40,6 +40,16 @@ class equipment_work_order_task(osv.osv):
             res[labor.id] = total
         return res
     
+    def _get_image(self, cr, uid, ids, name, args, context=None):
+        result = dict.fromkeys(ids, False)
+        for obj in self.browse(cr, uid, ids, context=context):
+            result[obj.id] = tools.image_get_resized_images(obj.signature, avoid_resize_medium=True)
+        return result
+
+    def _set_image(self, cr, uid, id, name, value, args, context=None):
+        return self.write(cr, uid, [id], {'signature': tools.image_resize_image_big(value)}, context=context)
+
+    
     _columns = {
         'name': fields.char('Work Order Task', required=True, select=True,readonly=True),              
         'task_type': fields.selection(TASK_TYPE, 'Type',required=True,readonly=False,states={'done': [('readonly', True)]}),        
@@ -57,7 +67,22 @@ class equipment_work_order_task(osv.osv):
         'service_spec_parts': fields.one2many('spec.service.parts', 'task_id', 'Parts',readonly=True,states={'inprocess': [('readonly', False)],}),
         'inspection_result': fields.selection(RESULT_SELECTION, 'Inspection Result',readonly=True,states={'inprocess': [('readonly', False)]}),
         'inspector': fields.many2one('hr.employee','Performed By', select=True),
-        'partner_id': fields.related('equipment_customer_id', 'partner_id', type="many2one", relation="res.partner", string="Customer", readonly=True),        
+        'partner_id': fields.related('equipment_customer_id', 'partner_id', type="many2one", relation="res.partner", string="Customer", readonly=True),
+        'signature': fields.binary("Signature", help="This field holds signature image, limited to 1024x1024px.",readonly=True,states={'inprocess': [('readonly', False)]}),
+        'signature_medium': fields.function(_get_image, fnct_inv=_set_image,
+            string="Signature", type="binary", multi="_get_image",
+            store={
+                'equipment.work.order.task': (lambda self, cr, uid, ids, c={}: ids, ['signature'], 10),
+            }),
+        'signature_small': fields.function(_get_image, fnct_inv=_set_image,
+            string="Small-sized image", type="binary", multi="_get_image",
+            store={
+                'equipment.work.order.task': (lambda self, cr, uid, ids, c={}: ids, ['signature'], 10),
+            },
+            help="Small-sized image of the sign. It is automatically "\
+                 "resized as a 64x64px image, with aspect ratio preserved. "\
+                 "Use this field anywhere a small image is required."),        
+        
     }
     _order = 'name'
     _defaults = {

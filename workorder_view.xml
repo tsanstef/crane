@@ -82,7 +82,7 @@
 											<group>
 												<field name="date"/>
 												<field name="labor_total" widget="float_time"/>	
-												<field name="inspector" readonly="1"/>																							 																													
+												<field name="inspector" readonly="1"/>																																			 																													
 											</group>
 										</group>
 										<group string="Inspection" attrs="{'invisible': [('task_type','=','service')]}">
@@ -105,7 +105,7 @@
                                                                 <field name="point_header" invisible="1"/>
                                                                 <field name="point_status" widget="selection" attrs="{'readonly': [('point_header', '=', True)]}"/>
                                                                 <field name="point_comment" attrs="{'readonly': [('point_header', '=', True)]}"/>                                                                
-																<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action"/>
+																<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>
                                                                 <!--<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>-->																
 																<field name="image_medium" widget="image" class="proven_photo" attrs="{'readonly': [('point_header', '=', True)]}" invisible="1"/>                                                        
                                                                 <field name="state" invisible="1"/>                                                                            
@@ -167,8 +167,13 @@
 													</tree>
 												</field>																							</page>
 										</notebook>
-										<group string="Notes">
-											<field name="notes" nolabel="1" placeholder="Enter Notes..."/>		
+										<group>
+											<group string="Signature">
+												<field name="signature" nolabel="1" widget='image' class="oe_avatar oe_left" options='{"preview_image": "signature_medium"}'/>
+											</group>
+											<group string="Notes">
+												<field name="notes" nolabel="1" placeholder="Enter Notes..."/>
+											</group>		
 										</group>
 									</sheet>
 								</form>
@@ -357,8 +362,13 @@
 									</tree>
 								</field>																							</page>
 						</notebook>
-						<group string="Notes">
-							<field name="notes" nolabel="1" placeholder="Enter Notes..."/>		
+						<group>
+							<group string="Signature">
+								<field name="signature" nolabel="1" widget='image' class="oe_avatar oe_left"/>
+							</group>
+							<group string="Notes">
+								<field name="notes" nolabel="1" placeholder="Enter Notes..."/>
+							</group>		
 						</group>
 					</sheet>
 				</form>
