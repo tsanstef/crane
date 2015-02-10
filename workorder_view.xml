@@ -168,7 +168,7 @@
 												</field>																							</page>
 										</notebook>
 										<group>
-											<group string="Signature">
+											<group string="Signature" >
 												<field name="signature" nolabel="1" widget='image' class="oe_avatar oe_left" options='{"preview_image": "signature_medium"}'/>
 											</group>
 											<group string="Notes">

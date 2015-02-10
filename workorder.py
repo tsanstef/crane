@@ -68,7 +68,7 @@ class equipment_work_order_task(osv.osv):
         'inspection_result': fields.selection(RESULT_SELECTION, 'Inspection Result',readonly=True,states={'inprocess': [('readonly', False)]}),
         'inspector': fields.many2one('hr.employee','Performed By', select=True),
         'partner_id': fields.related('equipment_customer_id', 'partner_id', type="many2one", relation="res.partner", string="Customer", readonly=True),
-        'signature': fields.binary("Signature", help="This field holds signature image, limited to 1024x1024px.",readonly=True,states={'inprocess': [('readonly', False)]}),
+        'signature': fields.binary("Signature", help="This field holds signature image, limited to 1024x1024px. ",readonly=True,states={'inprocess': [('readonly', False)]}),
         'signature_medium': fields.function(_get_image, fnct_inv=_set_image,
             string="Signature", type="binary", multi="_get_image",
             store={
