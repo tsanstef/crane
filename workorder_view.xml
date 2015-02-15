@@ -105,7 +105,7 @@
                                                                 <field name="point_header" invisible="1"/>
                                                                 <field name="point_status" widget="selection" attrs="{'readonly': [('point_header', '=', True)]}"/>
                                                                 <field name="point_comment" attrs="{'readonly': [('point_header', '=', True)]}"/>                                                                
-																<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>
+																<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'readonly': [('point_header', '=', True)]}"/>
                                                                 <!--<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>-->																
 																<field name="image_medium" widget="image" class="proven_photo" attrs="{'readonly': [('point_header', '=', True)]}" invisible="1"/>                                                        
                                                                 <field name="state" invisible="1"/>                                                                            
@@ -168,7 +168,7 @@
 												</field>																							</page>
 										</notebook>
 										<group>
-											<group string="Signature" >
+											<group string="Signature">
 												<field name="signature" nolabel="1" widget='image' class="oe_avatar oe_left" options='{"preview_image": "signature_medium"}'/>
 											</group>
 											<group string="Notes">
@@ -302,7 +302,7 @@
 										<field name="point_header" invisible="1"/>
 										<field name="point_status" widget="selection"/>
 										<field name="point_comment"/>										
-										<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action"/>
+										<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'readonly': [('point_header', '=', True)]}"/>
 										<!--<button icon="terp-stock_zoom" string="Inspection Point Image" name="%(action_view_inspection_point_photo)d" type="action" attrs="{'invisible':['|',('image_medium','=',False),('image_medium','=',None)]}"/>
 										<field name="image_medium" widget="image" img_width='100' img_height='33' class="proven_photo" invisible="1"/>-->
 										<field name="state" invisible="1"/>										                                    

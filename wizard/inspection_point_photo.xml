@@ -9,7 +9,7 @@
                 <form string="Inspection Point Photo" version="7.0">
 					<group>
 						<div class="proven_readonly_photo">
-							<field name="photo" widget="image" colspan="4" nolabel="1" on_change="onchange_add_inspection_image(photo)"/>
+							<field name="photo" widget="image" colspan="4" nolabel="1" on_change="onchange_add_inspection_image(photo)" options='{"size": [150, 150]}'/>
 						</div>
 					</group>
 					<footer>
