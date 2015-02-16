@@ -11,11 +11,11 @@
                 <xpath expr="//div[@name='buttons']" position="inside">
                     <button type="action"
                         string="Work Orders"
-                        name="%(crane.equipment_work_order_rfq)d"
+                        name="%(crane_hoist_inspection_system.equipment_work_order_rfq)d"
                         context="{'search_default_partner_id': active_id, 'default_partner_id' : [active_id]}"/>
 					<button type="action"
                         string="Inspections"
-                        name="%(crane.equipment_work_order_task_rfq)d"
+                        name="%(crane_hoist_inspection_system.equipment_work_order_task_rfq)d"
                         context="{'search_default_partner_id': active_id, 'default_partner_id' : [active_id]}"/>                    
 					                    
                 </xpath>
