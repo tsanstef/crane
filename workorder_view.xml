@@ -9,7 +9,7 @@
             parent="base.menu_maintenance_root" sequence="3" />
 		
 		 			
-		<!-- Work Orders -->
+		<!--   Work Orders   -->
         <record id="view_equipment_work_order_tree" model="ir.ui.view">
             <field name="name">equipment.work.order.tree</field>
             <field name="model">equipment.work.order</field>

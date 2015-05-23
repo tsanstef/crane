@@ -349,7 +349,7 @@ class equipment_work_order_task(osv.osv):
             'labor_total': total,
         }}
 
-# Initializing specification lines object
+# Initializing   specification lines object
 class spec_task(osv.osv):
     _name = "spec.task"
     _description = "Specification Lines"
