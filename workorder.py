@@ -36,7 +36,7 @@ class equipment_work_order_task(osv.osv):
         for labor in self.browse(cr, uid, ids, context=context):
             total = 0.0
             for lb in labor.labor_line:
-                total += lb.duration
+                total += lb.duration_float
             res[labor.id] = total
         return res
     
@@ -343,8 +343,8 @@ class equipment_work_order_task(osv.osv):
     def onchange_task_labor_time(self, cr, uid, ids, labor_total):
         total = 0.0        
         for labor in self.resolve_2many_commands(cr, uid, 'labor_line', labor_total, context=None):
-            if labor.get('duration'):
-                total += labor.get('duration')        
+            if labor.get('duration_float'):
+                total += labor.get('duration_float')
         return {'value': {
             'labor_total': total,
         }}
@@ -375,12 +375,27 @@ class labor_task(osv.osv):
         ('overtime', 'O'),
         ('double', 'D'),        
     ]
+
+    def _get_duration(self,cr, uid, ids, name, args, context=None):
+        result = {}
+        for obj in self.browse(cr, uid, ids, context=context):
+            result[obj.id] = 0.0
+            start_time = 1.0*calendar.timegm(time.strptime(obj.start_time, "%Y-%m-%d %H:%M:%S"))
+            end_time = 1.0*calendar.timegm(time.strptime(obj.end_time, "%Y-%m-%d %H:%M:%S"))
+            duration = (end_time - start_time)/3600
+            result[obj.id] = duration
+        return result
+
+    def _set_duration(self, cr, uid, id, name, value, args, context=None):
+        duration = value * 60
+        return self.write(cr, uid, [id], {'duration': duration}, context=context)
     
     _columns = {
         'name': fields.char('Comment', size=512),
         'start_time': fields.datetime('Start',required=True),
         'end_time': fields.datetime('End',required=True),
-        'duration': fields.float('Duration',required=True,digits=(16,2)),        
+        'duration': fields.integer('Duration'),
+        'duration_float': fields.function(_get_duration, fnct_inv=_set_duration, string="Duration (Float)", type="float", required=True),
         'labor_type': fields.selection(LABOR_TYPE, 'Type'),        
         'task_id': fields.many2one('equipment.work.order.task', 'Work Order Task',select=True,ondelete='cascade'),                        
     }
@@ -394,7 +409,7 @@ class labor_task(osv.osv):
             start_time = 1.0*calendar.timegm(time.strptime(start_time, "%Y-%m-%d %H:%M:%S"))
             end_time = 1.0*calendar.timegm(time.strptime(end_time, "%Y-%m-%d %H:%M:%S"))
             return {'value': {
-                'duration': (end_time - start_time)/3600,
+                'duration_float': (end_time - start_time)/3600,
             }}
         # if start time is present then it will automatically fetch end time
         if start_time:
@@ -447,9 +462,18 @@ class equipment_work_order(osv.osv):
             for wt in wo_task.wo_task_lines:
                 if wt.labor_line:
                     for lt in wt.labor_line:
-                        total += lt.duration
+                        total += lt.duration_float
             res[wo_task.id] = total
         return res
+
+    def _get_image(self, cr, uid, ids, name, args, context=None):
+        result = dict.fromkeys(ids, False)
+        for obj in self.browse(cr, uid, ids, context=context):
+            result[obj.id] = tools.image_get_resized_images(obj.signature_wo, avoid_resize_medium=True)
+        return result
+
+    def _set_image(self, cr, uid, id, name, value, args, context=None):
+        return self.write(cr, uid, [id], {'signature_wo': tools.image_resize_image_big(value)}, context=context)
     
     _columns = {
         'name': fields.char('Work Order', size=64, required=True, select=True,readonly=False,states={'inprocess': [('readonly', True)],'task_completed': [('readonly', True)],'done': [('readonly', True)]}),
@@ -462,6 +486,20 @@ class equipment_work_order(osv.osv):
         'state': fields.selection(STATE_SELECTION, 'Status',readonly=False),
         'desc': fields.text('Description',readonly=False,states={'done': [('readonly', True)]}),
         'wo_task_lines': fields.one2many('equipment.work.order.task', 'wo_id', 'Task',readonly=False,states={'done': [('readonly', True)]}),                       
+        'signature_wo': fields.binary("Signature", help="This field holds signature image, limited to 1024x1024px. ",readonly=False,states={'done': [('readonly', True)]}),
+        'signature_wo_medium': fields.function(_get_image, fnct_inv=_set_image,
+            string="Signature", type="binary", multi="_get_image",
+            store={
+                'equipment.work.order': (lambda self, cr, uid, ids, c={}: ids, ['signature_wo'], 10),
+            }),
+        'signature_wo_small': fields.function(_get_image, fnct_inv=_set_image,
+            string="Small-sized image", type="binary", multi="_get_image",
+            store={
+                'equipment.work.order': (lambda self, cr, uid, ids, c={}: ids, ['signature_wo'], 10),
+            },
+            help="Small-sized image of the sign. It is automatically "\
+                 "resized as a 64x64px image, with aspect ratio preserved. "\
+                 "Use this field anywhere a small image is required."),
     }
     _defaults = {
         'date': fields.date.context_today,

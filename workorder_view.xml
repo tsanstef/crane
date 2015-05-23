@@ -56,6 +56,9 @@
 								<field name="labor_total" widget="float_time"/>																					
 							</group>
 						</group>
+                        <group string="Signature">
+                            <field name="signature_wo" nolabel="1" widget='image' class="oe_left oe_avatar" options='{"size": [90, 90]}'/>
+                        </group>
 						<group string="Tasks">
 							<field name="wo_task_lines" nolabel="1">								
 								<form string="Tasks" version="7.0">
@@ -139,12 +142,12 @@
 													<form string="Labor" nolabel="1">
 														<group>
 															<group>														                                   
-																<field name="start_time" on_change="onchange_labor_time(start_time,end_time,duration)"/>
-																<field name="duration" widget="float_time" on_change="onchange_labor_duration(start_time,end_time,duration)"/>
+																<field name="start_time" on_change="onchange_labor_time(start_time,end_time,duration_float)"/>
+																<field name="duration_float" string="Duration" widget="float_time" on_change="onchange_labor_duration(start_time,end_time,duration_float)"/>
 																<field name="name"/>
 															</group>
 															<group>
-																<field name="end_time" on_change="onchange_labor_time(start_time,end_time,duration)"/>															
+																<field name="end_time" on_change="onchange_labor_time(start_time,end_time,duration_float)"/>
 																<field name="labor_type"/>
 															</group>
 														</group>														 										                                    
@@ -152,7 +155,7 @@
 													<tree string="Labor" nolabel="1">                                    
 														<field name="start_time"/>
 														<field name="end_time"/>
-														<field name="duration" widget="float_time"/>
+														<field name="duration_float" string="Duration" widget="float_time"/>
 														<field name="labor_type"/>
 														<field name="name"/>                                    
 													 </tree>									
@@ -334,12 +337,12 @@
 									<form string="Labor" nolabel="1">
 										<group>
 											<group>														                                   
-												<field name="start_time" on_change="onchange_labor_time(start_time,end_time,duration)"/>
-												<field name="duration" widget="float_time" on_change="onchange_labor_duration(start_time,end_time,duration)"/>											
+												<field name="start_time" on_change="onchange_labor_time(start_time,end_time,duration_float)"/>
+												<field name="duration_float" string="Duration" widget="float_time" on_change="onchange_labor_duration(start_time,end_time,duration_float)"/>
 												<field name="name"/>
 											</group>
 											<group>
-												<field name="end_time" on_change="onchange_labor_time(start_time,end_time,duration)"/>											
+												<field name="end_time" on_change="onchange_labor_time(start_time,end_time,duration_float)"/>
 												<field name="labor_type"/>
 											</group>
 										</group>										 										                                    
@@ -347,7 +350,7 @@
 									<tree string="Labor" nolabel="1">                                    
 										<field name="start_time"/>
 										<field name="end_time"/>
-										<field name="duration" widget="float_time"/>
+										<field name="duration_float" string="Duration" widget="float_time"/>
 										<field name="labor_type"/>
 										<field name="name"/>                                    
 									 </tree>									
